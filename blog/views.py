@@ -14,4 +14,11 @@ class AdminSignupView(TemplateView):
     template_name = "signup.html"
 
 
+class AdminAddPostView(TemplateView):
+    template_name = "add-post.html"
+
+
+class AdminPostDetailView(TemplateView):
+    template_name = "post-detail.html"
+
 # Create your views here.

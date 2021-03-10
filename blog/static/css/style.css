@@ -7566,5 +7566,14 @@ ul.inbox-nav li a:hover, ul.inbox-nav li.active a, ul.inbox-nav li a:focus {
   text-decoration:none;
   font-weight:bold
 }
-
+.notify-class{
+   background: #304CD8;
+   background: -webkit-linear-gradient(left, #304CD8 0%, #9F3762 100%);
+   background: -ms-linear-gradient(left, #304CD8 0%, #9F3762 100%);
+   background: linear-gradient(to right, #304CD8 0%, #9F3762 100%);
+   color: #fff;
+   font-size: 25px;
+   padding: 35px;
+   text-align: center;
+}
 /*# sourceMappingURL=style.css.map */

@@ -12,7 +12,7 @@ class BlogImages(models.Model):
         (1, "Publish"),
     )
     
-    post_image = models.ImageField(upload_to ='postImages/')
+    post_image = models.ImageField(upload_to='postImages/')
     status = models.IntegerField(choices=STATUS, default=0)
     updated_on = models.DateTimeField(auto_now= True)
     created_on = models.DateTimeField(auto_now_add=True)
@@ -26,11 +26,13 @@ class BlogPost(models.Model):
         Model for storing the post and its details.
     """
     STATUS = (
-        (0, "Hide "),
-        (1, "Publish"),
+        ("0", "Draft "),
+        ("1", "Publish"),
     )
     
     title = models.CharField(max_length=200, unique=True)
+    sub_title = models.CharField(max_length=200, unique=True)
+    category = models.CharField(max_length=200, unique=True)
     author = models.ForeignKey(User, on_delete=models.CASCADE, related_name='blog_posts')
     content = models.TextField()
     tags = TaggableManager()

@@ -25,6 +25,8 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/material-design-iconic-font/2.2.0/css/material-design-iconic-font.min.css" integrity="sha512-rRQtF4V2wtAvXsou4iUAs2kXHi3Lj9NE7xJR77DE7GHsxgY9RTWy93dzMXgDIG8ToiRTD45VsDNdTiUagOFeZA==" crossorigin="anonymous" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/simple-line-icons/2.5.5/css/simple-line-icons.min.css" integrity="sha512-QKC1UZ/ZHNgFzVKSAhV5v5j73eeL9EEN289eKAEFaAjgAiobVAnVv/AGuPbXsKl1dNoel3kNr6PYnSiTzVVBCw==" crossorigin="anonymous" />
+    {% block custom_head %}
+    {% endblock custom_head %}
 </head>
 
 <body>
@@ -160,10 +162,10 @@
                                             <a href="product.html">Products</a>
                                         </li>
                                         <li>
-                                            <a href="product-detail.html">Product Detail</a>
+                                            <a href="post-detail.html">Product Detail</a>
                                         </li>
                                         <li>
-                                            <a href="add-products.html">Add Product</a>
+                                            <a href="add-post.html">Add Product</a>
                                         </li>
                                         <li>
                                             <a href="product-orders.html">Orders</a>
@@ -427,10 +429,10 @@
                         <a href="product.html">Products</a>
                     </li>
                     <li>
-                        <a href="product-detail.html">Product Detail</a>
+                        <a href="post-detail.html">Product Detail</a>
                     </li>
                     <li>
-                        <a href="add-products.html">Add Product</a>
+                        <a href="add-post.html">Add Product</a>
                     </li>
                     <li>
                         <a href="product-orders.html">Orders</a>
@@ -1325,13 +1327,10 @@
 
 <!-- Init JavaScript -->
 <script src="{% static 'js/init.js' %}"></script>
+<script src="{% static 'js/notify.min.js' %}"></script>
 <script src="{% static 'js/dashboard-data.js' %}"></script>
-<script>
-    $("#notification").fadeIn("slow").append('your message');
-    $(".dismiss").click(function(){
-        $("#notification").fadeOut("slow");
-    });
-</script>
+{% block cutom_js %}
+{% endblock cutom_js %}
 </body>
 
 </html>

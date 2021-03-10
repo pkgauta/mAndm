@@ -1,0 +1,236 @@
+{% include "base.html" %}
+{% load static %}
+{% block custom_head %}
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="{% static 'css/image-uploader.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/tagsinput.css' %}">
+{% endblock custom_head %}
+{% block main %}
+    <!-- Main Content -->
+    <div class="page-wrapper">
+        <div class="container-fluid">
+            <!-- Title -->
+            <div class="row heading-bg">
+                <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
+                    <h5 class="txt-dark">add-post</h5>
+                </div>
+                <!-- Breadcrumb -->
+                <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
+                    <ol class="breadcrumb">
+                        <li><a href="index.html">Dashboard</a></li>
+                        <li class="active"><span>add-post</span></li>
+                    </ol>
+                </div>
+                <!-- /Breadcrumb -->
+            </div>
+            <!-- /Title -->
+
+            <!-- Row -->
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="panel panel-default card-view">
+                        <div class="panel-wrapper collapse in">
+                            <div class="panel-body">
+                                <div class="form-wrap">
+                                    <form action="#">
+                                        <h6 class="txt-dark capitalize-font"><i class="zmdi zmdi-info-outline mr-10"></i>about post</h6>
+                                        <hr class="light-grey-hr"/>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label class="control-label mb-10">Post Title</label>
+                                                    <input type="text" id="firstName" class="form-control" placeholder="Rounded Chair">
+                                                </div>
+                                            </div>
+                                            <!--/span-->
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label class="control-label mb-10">Sub text</label>
+                                                    <input type="text" id="lastName" class="form-control" placeholder="globe type chair for rest">
+                                                </div>
+                                            </div>
+                                            <!--/span-->
+                                        </div>
+                                        <!-- Row -->
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label class="control-label mb-10">Category</label>
+                                                    <select class="form-control" data-placeholder="Choose a Category" tabindex="1">
+                                                        <option value="Category 1">Category 1</option>
+                                                        <option value="Category 2">Category 2</option>
+                                                        <option value="Category 3">Category 5</option>
+                                                        <option value="Category 4">Category 4</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <!--/span-->
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label class="control-label mb-10">Status</label>
+                                                    <div class="radio-list">
+                                                        <div class="radio-inline pl-0">
+                                                            <div class="radio radio-info">
+                                                                <input type="radio" name="radio" id="radio1" value="1">
+                                                                <label for="radio1">Publish</label>
+                                                            </div>
+                                                        </div>
+                                                        <div class="radio-inline">
+                                                            <div class="radio radio-info">
+                                                                <input type="radio" name="radio" id="radio2" value="0">
+                                                                <label for="radio2">Draft</label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!--/span-->
+                                        </div>
+                                        <!--/row-->
+                                        <div class="seprator-block"></div>
+                                        <h6 class="txt-dark capitalize-font"><i class="zmdi zmdi-comment-text mr-10"></i>Post Description</h6>
+                                        <hr class="light-grey-hr"/>
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div class="form-group">
+                                                    <textarea class="form-control" rows="4">Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable. but the majority have suffered alteration in some form, by injected humour</textarea>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!--/row-->
+                                        <div class="seprator-block"></div>
+                                        <h6 class="txt-dark capitalize-font"><i class="zmdi zmdi-collection-image mr-10"></i>upload image</h6>
+                                        <hr class="light-grey-hr"/>
+                                        <div class="row">
+                                            <div class="col-lg-12">
+                                                <form action="http://example.com/post" enctype="multipart/form-data">
+                                                    <div class="input-images"></div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                        <div class="seprator-block"></div>
+                                        <h6 class="txt-dark capitalize-font"><i class="zmdi zmdi-calendar-note mr-10"></i>general info</h6>
+                                        <hr class="light-grey-hr"/>
+
+                                        <div class="row">
+                                            <div class="col-sm-6">
+                                                <div class="form-group">
+                                                    <input type="text" class="form-control" placeholder="Tags" disabled>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <div class="form-group">
+                                                    <input type="text" data-role="tagsinput" class="form-control">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-sm-6">
+                                                <div class="form-group">
+                                                    <input type="text" class="form-control" placeholder="Facebook Link" disabled>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <div class="form-group">
+                                                    <input type="text" class="form-control">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-sm-6">
+                                                <div class="form-group">
+                                                    <input type="text" class="form-control" placeholder="Twitter Link" disabled>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <div class="form-group">
+                                                    <input type="text" class="form-control">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-sm-6">
+                                                <div class="form-group">
+                                                    <input type="text" class="form-control" placeholder="Instagram Link" disabled>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <div class="form-group">
+                                                    <input type="text" class="form-control">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-actions">
+                                            <button class="btn btn-success btn-icon left-icon mr-10 pull-left"> <i class="fa fa-check"></i> <span>save</span></button>
+                                            <button type="button" class="btn btn-warning pull-left">Cancel</button>
+                                            <div class="clearfix"></div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- /Row -->
+
+        </div>
+
+        <!-- Footer -->
+        <footer class="footer container-fluid pl-30 pr-30">
+            <div class="row">
+                <div class="col-sm-12">
+                    <p>2018 &copy; Grandin. Pampered by Hencework</p>
+                </div>
+            </div>
+        </footer>
+        <!-- /Footer -->
+
+    </div>
+    <!-- /Main Content -->
+{% endblock main %}
+{% block cutom_js %}
+    <script type="text/javascript" src="{% static 'js/image-uploader.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/tagsinput.js' %}"></script>
+    <script>
+        $(document).ready(function(){
+            $('.input-images').imageUploader();
+        });
+        function form_submit(event) {
+            data = {
+                "title": $("#firstName").val().trim(),
+                "subtitle": $("#lastName").val(),
+                "status": $("#").val().trim(),
+                "category": $("#").val().trim(),
+                "content": $("#").val().trim(),
+                "tags": $("#").val().trim(),
+                "tags": $("#").val().trim(),
+                "tags": $("#").val().trim(),
+                "tags": $("#").val().trim(),
+            };
+            if (data.username.length > 0 && data.password.length > 0) {
+                const csrftoken = "{{ csrf_token }}"
+                $.ajax({
+                    url: '/api/login',
+                    type: 'POST',
+                    headers: {'X-CSRFToken': csrftoken},
+                    data: data,
+                    dataType: 'json',
+                    success: function (data) {
+                        if (data.success) {
+                            $.notify(data.message, "success", {color: "#fff", background: "#D44950"});
+                            setTimeout(() => {  window.location="/blog/landing"; }, 2000);
+                        } else {
+                            $.notify(data.message, "error", {color: "#fff", background: "#D44950"});
+                        }
+                    },
+                    error: function () {
+                        $.notify("Something bad happened !", "error", {color: "#fff", background: "#D44950"});
+                    }
+                });
+            } else {
+                $.notify("Please fill the mandatory fields !", "error", {color: "#fff", background: "#D44950"});
+            }
+        }
+    </script>
+{% endblock cutom_js %}
