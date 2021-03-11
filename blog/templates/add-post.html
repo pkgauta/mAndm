@@ -5,6 +5,7 @@
     <link rel="stylesheet" href="{% static 'css/image-uploader.min.css' %}">
     <link rel="stylesheet" href="{% static 'css/tagsinput.css' %}">
 {% endblock custom_head %}
+<script src="https://cdn.tiny.cloud/1/v5nksnf0mp2b3mdlylchu5prv2xvi5mx41vosr3pidq3xfrw/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
 {% block main %}
     <!-- Main Content -->
     <div class="page-wrapper">
@@ -45,7 +46,7 @@
                                             <!--/span-->
                                             <div class="col-md-6">
                                                 <div class="form-group">
-                                                    <label class="control-label mb-10">Sub text</label>
+                                                    <label class="control-label mb-10">Sub Title</label>
                                                     <input type="text" id="lastName" class="form-control" placeholder="globe type chair for rest">
                                                 </div>
                                             </div>
@@ -56,11 +57,11 @@
                                             <div class="col-md-6">
                                                 <div class="form-group">
                                                     <label class="control-label mb-10">Category</label>
-                                                    <select class="form-control" data-placeholder="Choose a Category" tabindex="1">
-                                                        <option value="Category 1">Category 1</option>
-                                                        <option value="Category 2">Category 2</option>
-                                                        <option value="Category 3">Category 5</option>
-                                                        <option value="Category 4">Category 4</option>
+                                                    <select class="form-control" id="post_category" data-placeholder="Choose a Category" tabindex="1">
+                                                        <option value="">Select option</option>
+\                                                        {% for items in choices.blog_category %}
+                                                        <option value={{items.0|safe}}>{{items.1|safe}}</option>
+                                                        {% endfor %}
                                                     </select>
                                                 </div>
                                             </div>
@@ -69,18 +70,14 @@
                                                 <div class="form-group">
                                                     <label class="control-label mb-10">Status</label>
                                                     <div class="radio-list">
+                                                        {% for items in choices.blog_status %}
                                                         <div class="radio-inline pl-0">
                                                             <div class="radio radio-info">
-                                                                <input type="radio" name="radio" id="radio1" value="1">
-                                                                <label for="radio1">Publish</label>
+                                                                <input type="radio" name="radio" id="radio{{forloop.counter}}" value={{items.0}}>
+                                                                <label for="radio{{forloop.counter}}">{{items.1}}</label>
                                                             </div>
                                                         </div>
-                                                        <div class="radio-inline">
-                                                            <div class="radio radio-info">
-                                                                <input type="radio" name="radio" id="radio2" value="0">
-                                                                <label for="radio2">Draft</label>
-                                                            </div>
-                                                        </div>
+                                                        {% endfor %}
                                                     </div>
                                                 </div>
                                             </div>
@@ -93,8 +90,9 @@
                                         <div class="row">
                                             <div class="col-md-12">
                                                 <div class="form-group">
-                                                    <textarea class="form-control" rows="4">Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable. but the majority have suffered alteration in some form, by injected humour</textarea>
-                                                </div>
+                                                    <textarea id="post_description">
+                                                      </textarea>
+                                                    </div>
                                             </div>
                                         </div>
                                         <!--/row-->
@@ -120,7 +118,7 @@
                                             </div>
                                             <div class="col-sm-6">
                                                 <div class="form-group">
-                                                    <input type="text" data-role="tagsinput" class="form-control">
+                                                    <input type="text" id="tags" data-role="tagsinput" class="form-control">
                                                 </div>
                                             </div>
                                         </div>
@@ -132,7 +130,7 @@
                                             </div>
                                             <div class="col-sm-6">
                                                 <div class="form-group">
-                                                    <input type="text" class="form-control">
+                                                    <input type="text" id="fb_link" class="form-control">
                                                 </div>
                                             </div>
                                         </div>
@@ -144,7 +142,7 @@
                                             </div>
                                             <div class="col-sm-6">
                                                 <div class="form-group">
-                                                    <input type="text" class="form-control">
+                                                    <input type="text" id="tw_link" class="form-control">
                                                 </div>
                                             </div>
                                         </div>
@@ -156,12 +154,12 @@
                                             </div>
                                             <div class="col-sm-6">
                                                 <div class="form-group">
-                                                    <input type="text" class="form-control">
+                                                    <input type="text" id="insta_link" class="form-control">
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="form-actions">
-                                            <button class="btn btn-success btn-icon left-icon mr-10 pull-left"> <i class="fa fa-check"></i> <span>save</span></button>
+                                            <button class="btn btn-success btn-icon left-icon mr-10 pull-left" onclick="form_submit()"> <i class="fa fa-check"></i> <span>save</span></button>
                                             <button type="button" class="btn btn-warning pull-left">Cancel</button>
                                             <div class="clearfix"></div>
                                         </div>
@@ -196,26 +194,51 @@
         $(document).ready(function(){
             $('.input-images').imageUploader();
         });
+        tinymce.init({
+            selector: 'textarea#post_description',
+            height: 500,
+            menubar: false,
+            plugins: [
+                'advlist autolink lists link image charmap print preview anchor',
+                'searchreplace visualblocks code fullscreen',
+                'insertdatetime media table paste code help wordcount'
+            ],
+            toolbar: 'undo redo | formatselect | ' +
+            'bold italic backcolor | alignleft aligncenter ' +
+            'alignright alignjustify | bullist numlist outdent indent | ' +
+            'removeformat | help',
+            content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }'
+            });
         function form_submit(event) {
-            data = {
-                "title": $("#firstName").val().trim(),
-                "subtitle": $("#lastName").val(),
-                "status": $("#").val().trim(),
-                "category": $("#").val().trim(),
-                "content": $("#").val().trim(),
-                "tags": $("#").val().trim(),
-                "tags": $("#").val().trim(),
-                "tags": $("#").val().trim(),
-                "tags": $("#").val().trim(),
-            };
-            if (data.username.length > 0 && data.password.length > 0) {
+            const image_obj = {}
+            const file_array = []
+            $('.uploaded-image').each(function(){image_obj[$(this).attr('data-name')]=($(this).find('img').attr('src'))})
+            Object.keys(image_obj).forEach(function(key) {
+                file_array.push(new File([image_obj[key]], key))
+            })
+            debugger;
+            formdata = new FormData()
+            formdata.append("title", $("#firstName").val().trim()),
+            formdata.append("sub_title", $("#lastName").val()),
+            formdata.append("status", $('input[name="radio"]:checked').val()),
+            formdata.append("category", $('#post_category option:selected').val()),
+            formdata.append("content", tinyMCE.activeEditor.getContent()),
+            formdata.append("tags", $("#tags").tagsinput('items')),
+            formdata.append("fb_link", $("#fb_link").val().trim()),
+            formdata.append("insta_link", $("#insta_link").val().trim()),
+            formdata.append("tw_link", $("#tw_link").val().trim()),
+            file_array.forEach(function(item){
+                formdata.append("post_image", item)
+            })
+            // if ((data.status != undefined && data.title.length > 0) && (data.status != undefined && data.status.length > 0)) {
                 const csrftoken = "{{ csrf_token }}"
                 $.ajax({
-                    url: '/api/login',
+                    url: '/api/add-post',
                     type: 'POST',
                     headers: {'X-CSRFToken': csrftoken},
-                    data: data,
-                    dataType: 'json',
+                    data: formdata,
+                    contentType: false,
+                    processData: false,
                     success: function (data) {
                         if (data.success) {
                             $.notify(data.message, "success", {color: "#fff", background: "#D44950"});
@@ -228,9 +251,9 @@
                         $.notify("Something bad happened !", "error", {color: "#fff", background: "#D44950"});
                     }
                 });
-            } else {
-                $.notify("Please fill the mandatory fields !", "error", {color: "#fff", background: "#D44950"});
-            }
+            // } else {
+            //     $.notify("Please fill the mandatory fields !", "error", {color: "#fff", background: "#D44950"});
+            // }
         }
     </script>
 {% endblock cutom_js %}

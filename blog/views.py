@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from .utils import get_choices_for_pages
 from django.views.generic import TemplateView
 
 
@@ -16,6 +17,11 @@ class AdminSignupView(TemplateView):
 
 class AdminAddPostView(TemplateView):
     template_name = "add-post.html"
+
+    def get_context_data(self, **kwargs):
+        context = super(AdminAddPostView, self).get_context_data(**kwargs)
+        context["choices"] = get_choices_for_pages("add-post")
+        return context
 
 
 class AdminPostDetailView(TemplateView):

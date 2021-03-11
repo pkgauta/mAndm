@@ -1,5 +1,6 @@
 from django.contrib.auth import login, authenticate
 from rest_framework.response import Response
+from blog.models import *
 from rest_framework.views import APIView
 
 
@@ -18,5 +19,12 @@ class LoginAPIView(APIView):
                 return Response({"success": False, "message": "Invalid credentials !"})
         else:
             return Response({"success": False, "message": "Username and Password are mandatory !"})
+
+
+class PostAPIView(APIView):
+
+    def post(self, request):
+        
+        import pdb; pdb.set_trace()
 
 # Create your views here.
