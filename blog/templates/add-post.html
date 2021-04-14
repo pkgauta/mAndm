@@ -59,9 +59,9 @@
                                                     <label class="control-label mb-10">Category</label>
                                                     <select class="form-control" id="post_category" data-placeholder="Choose a Category" tabindex="1">
                                                         <option value="">Select option</option>
-\                                                        {% for items in choices.blog_category %}
+                                                        \                                                        {% for items in choices.blog_category %}
                                                         <option value={{items.0|safe}}>{{items.1|safe}}</option>
-                                                        {% endfor %}
+                                                    {% endfor %}
                                                     </select>
                                                 </div>
                                             </div>
@@ -71,12 +71,12 @@
                                                     <label class="control-label mb-10">Status</label>
                                                     <div class="radio-list">
                                                         {% for items in choices.blog_status %}
-                                                        <div class="radio-inline pl-0">
-                                                            <div class="radio radio-info">
-                                                                <input type="radio" name="radio" id="radio{{forloop.counter}}" value={{items.0}}>
-                                                                <label for="radio{{forloop.counter}}">{{items.1}}</label>
+                                                            <div class="radio-inline pl-0">
+                                                                <div class="radio radio-info">
+                                                                    <input type="radio" name="radio" id="radio{{forloop.counter}}" value={{items.0}}>
+                                                                    <label for="radio{{forloop.counter}}">{{items.1}}</label>
+                                                                </div>
                                                             </div>
-                                                        </div>
                                                         {% endfor %}
                                                     </div>
                                                 </div>
@@ -92,7 +92,7 @@
                                                 <div class="form-group">
                                                     <textarea id="post_description">
                                                       </textarea>
-                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
                                         <!--/row-->
@@ -204,11 +204,11 @@
                 'insertdatetime media table paste code help wordcount'
             ],
             toolbar: 'undo redo | formatselect | ' +
-            'bold italic backcolor | alignleft aligncenter ' +
-            'alignright alignjustify | bullist numlist outdent indent | ' +
-            'removeformat | help',
+                'bold italic backcolor | alignleft aligncenter ' +
+                'alignright alignjustify | bullist numlist outdent indent | ' +
+                'removeformat | help',
             content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }'
-            });
+        });
         function form_submit(event) {
             const image_obj = {}
             const file_array = []
@@ -216,44 +216,51 @@
             Object.keys(image_obj).forEach(function(key) {
                 file_array.push(new File([image_obj[key]], key))
             })
-            debugger;
-            formdata = new FormData()
-            formdata.append("title", $("#firstName").val().trim()),
-            formdata.append("sub_title", $("#lastName").val()),
-            formdata.append("status", $('input[name="radio"]:checked').val()),
-            formdata.append("category", $('#post_category option:selected').val()),
-            formdata.append("content", tinyMCE.activeEditor.getContent()),
-            formdata.append("tags", $("#tags").tagsinput('items')),
-            formdata.append("fb_link", $("#fb_link").val().trim()),
-            formdata.append("insta_link", $("#insta_link").val().trim()),
-            formdata.append("tw_link", $("#tw_link").val().trim()),
-            file_array.forEach(function(item){
-                formdata.append("post_image", item)
-            })
-            // if ((data.status != undefined && data.title.length > 0) && (data.status != undefined && data.status.length > 0)) {
-                const csrftoken = "{{ csrf_token }}"
-                $.ajax({
-                    url: '/api/add-post',
-                    type: 'POST',
-                    headers: {'X-CSRFToken': csrftoken},
-                    data: formdata,
-                    contentType: false,
-                    processData: false,
-                    success: function (data) {
-                        if (data.success) {
-                            $.notify(data.message, "success", {color: "#fff", background: "#D44950"});
-                            setTimeout(() => {  window.location="/blog/landing"; }, 2000);
-                        } else {
-                            $.notify(data.message, "error", {color: "#fff", background: "#D44950"});
-                        }
-                    },
-                    error: function () {
-                        $.notify("Something bad happened !", "error", {color: "#fff", background: "#D44950"});
+            const mandatory_fields = ["title","status","category","description"]
+            let formData = new FormData()
+            formData.append("title", $("#firstName").val().trim()),
+                formData.append("sub_title", $("#lastName").val()),
+                formData.append("status", $('input[name="radio"]:checked').val()[0]),
+                formData.append("category", $('#post_category option:selected').val()),
+                formData.append("description", tinyMCE.activeEditor.getContent()),
+                formData.append("tags", JSON.stringify($("#tags").tagsinput('items'))),
+                formData.append("fb_link", $("#fb_link").val().trim()),
+                formData.append("insta_link", $("#insta_link").val().trim()),
+                formData.append("tw_link", $("#tw_link").val().trim()),
+                file_array.forEach(function(item){
+                    formData.append("post_image", item)
+                })
+            for (var pair of formData.entries()) {
+                debugger;
+                if(mandatory_fields.includes(pair[0])){
+                    if(pair[1].length < 1 || pair[1] == undefined || pair[1] == "undefined"){
+                        $.notify(pair[0]+" is mandatory", "error", {color: "#fff", background: "#D44950"});
+                        return
                     }
-                });
-            // } else {
-            //     $.notify("Please fill the mandatory fields !", "error", {color: "#fff", background: "#D44950"});
-            // }
+                }
+            }
+
+            // if ((data.status != undefined && data.title.length > 0) && (data.status != undefined && data.status.length > 0)) {
+            const csrftoken = "{{ csrf_token }}"
+            $.ajax({
+                url: '/api/add-post',
+                type: 'POST',
+                headers: {'X-CSRFToken': csrftoken},
+                data: formData,
+                contentType: false,
+                processData: false,
+                success: function (data) {
+                    if (data.success) {
+                        $.notify(data.message, "success", {color: "#fff", background: "#D44950"});
+                        setTimeout(() => {  window.location="/blog/landing"; }, 2000);
+                    } else {
+                        $.notify(data.message, "error", {color: "#fff", background: "#D44950"});
+                    }
+                },
+                error: function () {
+                    $.notify("Something bad happened !", "error", {color: "#fff", background: "#D44950"});
+                }
+            });
         }
     </script>
 {% endblock cutom_js %}

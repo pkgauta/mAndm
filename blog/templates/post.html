@@ -1,0 +1,61 @@
+{% load static %}
+{% include "base.html" %}
+{% block main %}
+<!-- Main Content -->
+<div class="page-wrapper">
+	<div class="container-fluid">
+		<!-- Title -->
+		<div class="row heading-bg">
+			<div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
+				<h5 class="txt-dark">products</h5>
+			</div>
+			<!-- Breadcrumb -->
+			<div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
+				<ol class="breadcrumb">
+					<li><a href="index.html">Dashboard</a></li>
+					<li class="active"><span>Posts</span></li>
+				</ol>
+			</div>
+			<!-- /Breadcrumb -->
+		</div>
+		<!-- /Title -->
+
+		<!-- Product Row One -->
+		<div class='row' id="post_div">
+		</div>
+		<!-- /Product Row Four -->
+
+	</div>
+</div>
+<!-- /Main Content -->
+{% endblock main %}
+{% block custom_js %}
+<script>
+	$(document).ready(function () {
+		const csrftoken = "{{ csrf_token }}"
+		$.ajax({
+			url: '/api/add-post',
+			type: 'GET',
+			headers: { 'X-CSRFToken': csrftoken },
+			contentType: false,
+			processData: false,
+			success: function (data) {
+				debugger
+				if (data.success) {
+					for (const post of JSON.parse(data.data)) {
+						let post_html = "<div class='col-sm-4'><div class='panel panel-default card-view pa-0'><div class='panel-wrapper collapse in'><div class='panel-body pa-0'><article class='col-item'><div class='photo'><div class='options'><a href='add-products.html' class='font-18 txt-grey mr-10 pull-left'><iclass='zmdi zmdi-edit'></i></a><a href='javascript:void(0);' class='font-18 txt-grey pull-left sa-warning'><iclass='zmdi zmdi-close'></i></a></div><a href='javascript:void(0);'> <img src='{% static 'img/chair.jpg' %}' class='img-responsive'alt='Product Image'/> </a></div><div class='info'><h6>" + post.fields.title + "</h6><div class='product-rating inline-block'><a href='javascript:void(0);'class='font-12 txt-success zmdi zmdi-star mr-0'></a><ahref='javascript:void(0);'class='font-12 txt-success zmdi zmdi-star mr-0'></a><ahref='javascript:void(0);'class='font-12 txt-success zmdi zmdi-star mr-0'></a><ahref='javascript:void(0);'class='font-12 txt-success zmdi zmdi-star mr-0'></a><ahref='javascript:void(0);'class='font-12 txt-success zmdi zmdi-star-outline mr-0'></a></div><span class='head-font block text-warning font-16'> Category : " + post.fields.category.toUpperCase() + "</span></div></article></div></div></div></div>"
+						$("#post_div").append(post_html)
+					}
+					$.notify(data.message, "success", { color: "#fff", background: "#D44950" });
+					// setTimeout(() => { window.location = "/blog/landing"; }, 2000);
+				} else {
+					$.notify(data.message, "error", { color: "#fff", background: "#D44950" });
+				}
+			},
+			error: function () {
+				$.notify("Something bad happened !", "error", { color: "#fff", background: "#D44950" });
+			}
+		});
+	})
+</script>
+{% endblock custom_js %}

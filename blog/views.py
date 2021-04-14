@@ -24,6 +24,10 @@ class AdminAddPostView(TemplateView):
         return context
 
 
+class AdminPostListView(TemplateView):
+    template_name = "post.html"
+
+
 class AdminPostDetailView(TemplateView):
     template_name = "post-detail.html"
 

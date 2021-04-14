@@ -8,7 +8,7 @@ BLOG_IMAGE_STATUS = (
     )
 
 BLOG_POST_STATUS = (
-        ("0", "Draft "),
+        ("0", "Draft"),
         ("1", "Publish"),
     )
 BLOG_POST_CATEGORY = (
@@ -16,6 +16,7 @@ BLOG_POST_CATEGORY = (
         ("car", "Car"),
         ("news", "News"),
     )
+
 
 class BlogImages(models.Model):
     """
@@ -39,11 +40,11 @@ class BlogPost(models.Model):
     title = models.CharField(max_length=200)
     sub_title = models.CharField(max_length=200)
     category = models.CharField(max_length=200, choices=BLOG_POST_CATEGORY)
-    author = models.ForeignKey(User, on_delete=models.CASCADE, related_name='blog_posts')
-    content = models.TextField()
+    author = models.ForeignKey(User, on_delete=models.CASCADE, related_name='blog_posts', null=True)
+    description = models.TextField()
     tags = TaggableManager()
-    post_image = models.ForeignKey(BlogImages, on_delete=models.CASCADE, related_name='blog_posts')
-    status = models.IntegerField(choices=BLOG_POST_STATUS, default=0)
+    post_image = models.ManyToManyField(BlogImages, related_name='blog_posts')
+    status = models.CharField(max_length=200, choices=BLOG_POST_STATUS)
     fb_link = models.CharField(max_length=200, null=True)
     insta_link = models.CharField(max_length=200, null=True)
     tw_link = models.CharField(max_length=200, null=True)
@@ -53,8 +54,8 @@ class BlogPost(models.Model):
     class Meta:
         ordering = ['-created_on']
 
-    # def __str__(self):
-    #     return self.title
+    def __str__(self):
+        return self.title
 
 
 # Create your models here.
